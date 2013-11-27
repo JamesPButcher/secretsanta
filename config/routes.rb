@@ -1,4 +1,10 @@
 Secretsanta::Application.routes.draw do
+  resources :people
+  
+  get 'redo' => 'people#redo', as: :redo
+
+  root to: 'people#new'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
