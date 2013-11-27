@@ -46,11 +46,7 @@ class Person < ActiveRecord::Base
 			@person_1.give_to(@person_2)
 		else
 			raise Exception, 'End of list or odd number'
-		end
-
-		if Person.where(giving_to_id: nil, receiving_from_id: nil) != []
-			Person.match_and_give
-		end
+		end		
 	end
 
 	def self.email_everyone
@@ -72,7 +68,9 @@ class Person < ActiveRecord::Base
 			end
 		end
 
-
+		if Person.where(giving_to_id: nil, receiving_from_id: nil) != []
+			Person.redo
+		end
 	end
 
 	def self.reset_gives
