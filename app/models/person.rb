@@ -9,6 +9,7 @@
 #  receiving_from_id :integer
 #  created_at        :datetime
 #  updated_at        :datetime
+#  wishlist          :string(255)
 #
 
 class Person < ActiveRecord::Base
@@ -46,6 +47,18 @@ class Person < ActiveRecord::Base
 		else
 			raise Exception, 'End of list or odd number'
 		end
+
+		if Person.where(giving_to_id: nil, receiving_from_id: nil) != []
+			Person.match_and_give
+		end
+	end
+
+	def self.email_everyone
+		people = Person.all
+
+		people.each do |person|
+			GiftMailer.gift_email(person).deliver
+		end
 	end
 
 	def self.automatch
@@ -58,6 +71,8 @@ class Person < ActiveRecord::Base
 				keep_looping = false
 			end
 		end
+
+
 	end
 
 	def self.reset_gives
