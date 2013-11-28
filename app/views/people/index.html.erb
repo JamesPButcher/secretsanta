@@ -41,6 +41,7 @@
 <%= link_to 'Add yourself as a Secret Santa!', new_person_path, class: 'btn btn-success btn-lg' %>
 
 <% if is_admin? %>
-<%= link_to 'Redo', redo_path, class: 'btn btn-default' %>
+<%= link_to 'Automatch', redo_path, class: 'btn btn-default' %>
+<%= link_to 'Reset recipients', reset_path, class: 'btn btn-default' %>
 <%= link_to 'Email everyone', email_everyone_path, class: 'btn btn-default' %>
 <% end %>

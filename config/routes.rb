@@ -3,6 +3,7 @@ Secretsanta::Application.routes.draw do
   
   get 'redo' => 'people#redo', as: :redo
   get 'email' => 'people#email_everyone', as: :email_everyone
+  get 'reset' => 'people#reset', as: :reset
 
   get 'admin' => 'people#admin', as: :admin
   post 'admin' => 'people#admin_login', as: :admin_login

@@ -8,6 +8,12 @@ class PeopleController < ApplicationController
   def admin
   end
 
+  def reset
+    Person.reset_gives
+
+    redirect_to people_path
+  end
+
   # POST /admin
   def admin_login
     if params[:password] == ENV['ADMIN_PASSWORD']
