@@ -22,6 +22,8 @@ gem 'therubyracer', platforms: :ruby
 # Heroku integration has previously relied on using the Rails plugin system, which has been removed from Rails 4. To enable features such as static asset serving and logging on Herok
 gem 'rails_12factor', group: :production
 
+gem 'pg', group: :production
+
 # Use bootstrap
 #gem 'bootstrap-sass', '2.3.2.0'
 
