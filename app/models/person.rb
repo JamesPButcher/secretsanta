@@ -68,6 +68,8 @@ class Person < ActiveRecord::Base
 			end
 		end
 
+		# there will be cases where both giving and receiving is blank
+		# so re call a redo to scramble again
 		if Person.where(giving_to_id: nil, receiving_from_id: nil) != []
 			Person.redo
 		end

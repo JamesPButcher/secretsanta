@@ -4,7 +4,7 @@ Secretsanta::Application.routes.draw do
   get 'redo' => 'people#redo', as: :redo
   get 'email' => 'people#email_everyone', as: :email_everyone
 
-  root to: 'people#new'
+  root to: 'people#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
