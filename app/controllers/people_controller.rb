@@ -27,8 +27,13 @@ class PeopleController < ApplicationController
 
   # GET /redo
   def email_everyone
-    Person.email_everyone
-    redirect_to people_path
+    result = Person.email_everyone
+
+    if result == true
+      redirect_to people_path
+    else
+      render text: 'Failed to send emails, someone doesn\'t have a giver or receiver'
+    end
   end
 
   # GET /people

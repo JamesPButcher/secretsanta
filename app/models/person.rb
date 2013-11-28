@@ -55,8 +55,16 @@ class Person < ActiveRecord::Base
 		people = Person.all
 
 		people.each do |person|
+			if person.giving_to.nil? || person.receiving_from.nil?
+				return false
+			end
+		end
+
+		people.each do |person|
 			GiftMailer.gift_email(person).deliver
 		end
+
+		return true
 	end
 
 	def self.automatch
