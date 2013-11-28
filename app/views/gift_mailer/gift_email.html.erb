@@ -6,7 +6,8 @@
   <body>
     <h1>You are a Secret Santa!</h1>
     <p>
-      You need to give a gift to: <h3><%= @person.giving_to.name %></h3>	
+      You need to give a gift to: <h3><%= @person.giving_to.name %></h3>
+      <p>Remember, there's a $30 spending limit!</p>
     </p>
     <% unless @person.giving_to.wishlist.blank? %>
     	<p>
