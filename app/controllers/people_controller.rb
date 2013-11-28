@@ -1,7 +1,23 @@
 class PeopleController < ApplicationController
-  http_basic_authenticate_with name: "xmas", password: "password"
+  http_basic_authenticate_with name: "xmas", password: ENV['USER_PASSWORD']
 
   before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :restrict_unless_admin, except: [:index, :new, :create, :admin, :admin_login]
+
+  # GET /admin
+  def admin
+  end
+
+  # POST /admin
+  def admin_login
+    if params[:password] == ENV['ADMIN_PASSWORD']
+      session[:admin] = true
+    else
+      session[:admin] = false
+    end
+
+    redirect_to root_path
+  end
 
   # GET /redo
   def redo
@@ -84,5 +100,11 @@ class PeopleController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:name, :email, :giving_to_id, :receiving_from_id, :wishlist)
+    end
+
+    def restrict_unless_admin
+      unless is_admin?
+        redirect_to root_path
+      end
     end
 end

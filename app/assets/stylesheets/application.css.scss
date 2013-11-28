@@ -13,3 +13,19 @@
  */
 
 @import "twitter/bootstrap";
+
+body {
+	background-image: url('/img/snowflake_pattern.jpg')
+}
+
+.container {
+	background-color: #eee;
+}
+
+#error_explanation {
+	background-color: #fdd;
+}
+
+.field_with_errors {
+	color: #f33;
+}

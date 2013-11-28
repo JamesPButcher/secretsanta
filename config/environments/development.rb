@@ -27,7 +27,7 @@ Secretsanta::Application.configure do
   port:                 587,
   domain:               'gmail.com',
   user_name:            'butcher.secret.santa@gmail.com',
-  password:             'xmas2013',
+  password:              ENV['GMAIL_PASSWORD'],
   authentication:       'plain',
   enable_starttls_auto: true  }
 

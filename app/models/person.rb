@@ -16,8 +16,12 @@ class Person < ActiveRecord::Base
 	has_one :giving_to, class_name: 'Person', foreign_key: 'receiving_from_id'
 	has_one :receiving_from, class_name: 'Person', foreign_key: 'giving_to_id'
 
+	validates :name, :email, presence: true
+
+	
+
 	def to_s
-		name
+		Digest::MD5.hexdigest(name).truncate(16)
 	end
 
 	def give_to(recipient)

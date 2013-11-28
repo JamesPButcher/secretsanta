@@ -4,6 +4,9 @@ Secretsanta::Application.routes.draw do
   get 'redo' => 'people#redo', as: :redo
   get 'email' => 'people#email_everyone', as: :email_everyone
 
+  get 'admin' => 'people#admin', as: :admin
+  post 'admin' => 'people#admin_login', as: :admin_login
+
   root to: 'people#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

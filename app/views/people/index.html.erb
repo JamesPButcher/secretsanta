@@ -1,16 +1,20 @@
-<h1>Listing people</h1>
+<h1>Secret Santa!</h1>
+
+<br/>
 
 <table class='table table-striped table-bordered'>
   <thead>
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th>Giving to</th>
-      <th>Receiving from</th>
+      <th>Giving to (scrambled)</th>
+      <th>Receiving from (scrambled)</th>
       <th>Wishlist</th>
+      <% if is_admin? %>
       <th></th>
       <th></th>
       <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -21,10 +25,12 @@
         <td><%= person.email %></td>
         <td><%= person.giving_to %></td>
         <td><%= person.receiving_from %></td>
-        <td><%= person.wishlist %></td>
+        <td><%= person.wishlist.blank? ? 'Not provided' : 'Provided' %></td>
+        <% if is_admin? %>
         <td><%= link_to 'Show', person %></td>
         <td><%= link_to 'Edit', edit_person_path(person) %></td>
         <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -32,6 +38,9 @@
 
 <br>
 
-<%= link_to 'New Person', new_person_path %>
-<%= link_to 'Redo', redo_path %>
-<%= link_to 'Email everyone', email_everyone_path %>
+<%= link_to 'Add yourself to the Secret Santa', new_person_path, class: 'btn btn-success btn-lg' %>
+
+<% if is_admin? %>
+<%= link_to 'Redo', redo_path, class: 'btn btn-default' %>
+<%= link_to 'Email everyone', email_everyone_path, class: 'btn btn-default' %>
+<% end %>
