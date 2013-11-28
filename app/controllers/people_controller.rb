@@ -103,7 +103,7 @@ class PeopleController < ApplicationController
     end
 
     def restrict_unless_admin
-      unless is_admin?
+      unless session[:admin]
         redirect_to root_path
       end
     end
