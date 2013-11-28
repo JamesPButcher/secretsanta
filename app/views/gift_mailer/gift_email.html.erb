@@ -6,7 +6,19 @@
   <body>
     <h1>You are a Secret Santa!</h1>
     <p>
-      You need to give a gift to <%= @person.receiving_from.name %>
+      You need to give a gift to: <h3><%= @person.giving_to.name %></h3>	
     </p>
+    <% unless @person.giving_to.wishlist.blank? %>
+    	<p>
+    		Their wishlist is: <%= @person.giving_to.wishlist %>
+    	</p>
+    <% else %>
+    	<p>
+    		The person did not supply a wishlist.
+    	</p>
+    <% end %>
+    Merry Christmas!<br/>
+    James and Chris<br/><br/>
+    http://butcher-xmas.herokuapp.com
   </body>
 </html>
