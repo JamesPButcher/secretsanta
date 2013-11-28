@@ -2,6 +2,7 @@ Secretsanta::Application.routes.draw do
   resources :people
   
   get 'redo' => 'people#redo', as: :redo
+  get 'email' => 'people#email_everyone', as: :email_everyone
 
   root to: 'people#new'
 

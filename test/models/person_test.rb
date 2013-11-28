@@ -4,6 +4,9 @@ class PersonTest < ActiveSupport::TestCase
   setup do
   	@person_1 = Person.create(name: 'Chris', email: 'cbutcher@gmail.com')
   	@person_2 = Person.create(name: 'James', email: 'jbutcher@gmail.com')
+    @person_3 = Person.create(name: 'Joanna', email: 'jbutcher@gmail.com')
+    @person_4 = Person.create(name: 'Rob', email: 'jbutcher@gmail.com')
+    @person_5 = Person.create(name: 'Tim', email: 'jbutcher@gmail.com')
 
   	@person_1.give_to(@person_2)
   end
@@ -38,6 +41,17 @@ class PersonTest < ActiveSupport::TestCase
 
   test 'James can receive a gift from Chris' do
   	assert_equal @person_1, @person_2.receiving_from
+  end
+
+  test 'automate works even if we do it like a 1000 times' do
+    1000.times do
+      Person.redo      
+    end
+
+    Person.all.each do |person|
+      assert_not_nil person.giving_to
+      assert_not_nil person.receiving_from
+    end
   end
 
 end

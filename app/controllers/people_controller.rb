@@ -9,6 +9,12 @@ class PeopleController < ApplicationController
     redirect_to people_path
   end
 
+  # GET /redo
+  def email_everyone
+    Person.email_everyone
+    redirect_to people_path
+  end
+
   # GET /people
   # GET /people.json
   def index
