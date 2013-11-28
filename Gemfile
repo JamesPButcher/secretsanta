@@ -18,6 +18,10 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
+# For Heroku
+# Heroku integration has previously relied on using the Rails plugin system, which has been removed from Rails 4. To enable features such as static asset serving and logging on Herok
+gem 'rails_12factor', group: :production
+
 # Use bootstrap
 #gem 'bootstrap-sass', '2.3.2.0'
 
@@ -51,3 +55,5 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+ruby "2.0.0"

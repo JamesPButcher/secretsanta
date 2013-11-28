@@ -19,12 +19,12 @@ class PersonTest < ActiveSupport::TestCase
   	assert_equal 'Person', @person_2.class.to_s
   end
 
-  test 'Chris has a name, and it\'s Chris' do
-  	assert_equal 'Chris', @person_1.to_s  	
+  test 'Chris has a name, and it\'s Chris scrambled with md5' do
+  	assert_equal Digest::MD5.hexdigest('Chris').truncate(16), @person_1.to_s  	
   end
 
-  test 'James has a name, and it\'s James' do
-  	assert_equal 'James', @person_2.to_s
+  test 'James has a name, and it\'s James scrambled with md5' do
+  	assert_equal Digest::MD5.hexdigest('James').truncate(16), @person_2.to_s
   end
 
   test 'Chris is not receiving a gift from anyone' do

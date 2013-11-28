@@ -18,8 +18,6 @@ class Person < ActiveRecord::Base
 
 	validates :name, :email, presence: true
 
-	
-
 	def to_s
 		Digest::MD5.hexdigest(name).truncate(16)
 	end
