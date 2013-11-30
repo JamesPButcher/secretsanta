@@ -51,6 +51,15 @@ class Person < ActiveRecord::Base
 		end		
 	end
 
+	def self.email_by_name(person)
+		if person.giving_to.nil? || person.receiving_from.nil?
+			return false
+		else
+			GiftMailer.gift_email(person).deliver
+			return true
+		end
+	end
+
 	def self.email_everyone
 		people = Person.all
 

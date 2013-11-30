@@ -31,6 +31,21 @@ class PeopleController < ApplicationController
     redirect_to people_path
   end
 
+  def email_by_name
+    person = Person.find_by_name(params[:name])
+
+    puts params
+
+    result = Person.email_by_name(person)
+
+    if result == true
+      redirect_to people_path
+    else
+      render text: "Failed to send email to #{person.email}"
+    end
+
+  end
+
   # GET /redo
   def email_everyone
     result = Person.email_everyone
