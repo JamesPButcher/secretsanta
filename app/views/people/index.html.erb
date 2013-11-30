@@ -8,7 +8,9 @@
       <th>Name</th>
       <th>Email</th>
       <th>Giving to (scrambled)</th>
+      <% if is_admin? %>
       <th>Receiving from (scrambled)</th>
+      <% end %>
       <th>Wishlist</th>
       <% if is_admin? %>
       <th></th>
@@ -24,7 +26,9 @@
         <td><%= person.name %></td>
         <td><%= person.email %></td>
         <td><%= person.giving_to %></td>
+        <% if is_admin? %>
         <td><%= person.receiving_from %></td>
+        <% end %>
         <td><%= person.wishlist.blank? ? 'Not provided' : 'Provided' %></td>
         <% if is_admin? %>
         <td><%= link_to 'Show', person %></td>
