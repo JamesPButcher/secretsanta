@@ -10,7 +10,6 @@ class PeopleController < ApplicationController
 
   def reset
     Person.reset_gives
-
     redirect_to people_path
   end
 
@@ -34,26 +33,19 @@ class PeopleController < ApplicationController
   def email_by_name
     person = Person.find_by_name(params[:name])
 
-    puts params
-
-    result = Person.email_by_name(person)
-
-    if result == true
-      redirect_to people_path
+    if Person.email_by_name(person)
+      redirect_to people_path, notice: "Successfully emailed #{person.name}"
     else
-      render text: "Failed to send email to #{person.email}"
+      redirect_to people_path, alert: "Failed to send email to #{person.email}"
     end
-
   end
 
   # GET /redo
   def email_everyone
-    result = Person.email_everyone
-
-    if result == true
-      redirect_to people_path
+    if Person.email_everyone
+      redirect_to people_path, notice: 'Successfully emailed everyone'
     else
-      render text: 'Failed to send emails, someone doesn\'t have a giver or receiver'
+      redirect_to people_path, alert: 'Failed to send emails, someone doesn\'t have a giver or receiver'
     end
   end
 
