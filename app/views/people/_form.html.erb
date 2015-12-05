@@ -4,6 +4,7 @@
   <%= f.inputs :name => "Your Secret Santa details" do %>
    <%= f.input :name %>
    <%= f.input :email %>
+   <%= f.input :email_confirmation if @person.new_record? %>
    <%= f.input :wishlist %>
    <%= f.input :avoiding_giving_to, as: :select, collection: Person.where.not(id: @person.id).pluck(:name, :id) if is_admin? %>
  <% end %>

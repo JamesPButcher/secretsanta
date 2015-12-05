@@ -15,12 +15,6 @@
       <%= yield %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-offset-10 col-lg-2">
-      <%= link_to 'Admin login', admin_path, class: 'btn btn-default btn-sm' %>
-      <%= '(Signed in)' if is_admin? %>
-    </div>
-  </div>
 
   <hr>
   <div style="text-align: center">
@@ -28,6 +22,11 @@
     <%= image_tag asset_path('wiig.gif') %>
     <%= image_tag asset_path('rudolf.gif') %>
   </div>
+</div>
+
+<div style="top: 0px; right: 0px; position: absolute; background-color: white">
+  <%= link_to 'Admin login', admin_path, class: 'btn btn-default btn-lg' %>
+  <%= '(Signed in)' if is_admin? %>
 </div>
 
 </body>

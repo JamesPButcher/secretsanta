@@ -26,7 +26,7 @@ class GiftAssigner
       raise AssignmentInfiniteLoop.new if i == RESET_RETRY_COUNT - 1
 
       if Person.all_giving_and_receiving?
-        break
+        return true
       else
         Person.reset_gives
       end

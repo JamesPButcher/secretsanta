@@ -55,4 +55,40 @@ class PersonTest < ActiveSupport::TestCase
   test '.all_giving_and_receiving? returns false if everyone is receiving and giving a gift' do
     refute Person.all_giving_and_receiving?
   end
+
+  test 'a new Person record is valid if it has an email_confirmation that matches its email' do
+    valid_person = Person.create(name: 'Some guy',
+                                 email: 'email@email.com',
+                                 email_confirmation: 'email@email.com',
+                                 wishlist: 'Nintendo')
+
+    assert valid_person.valid?
+  end
+
+  test 'a new Person record is invalid if it has an email_confirmation that does not match its email' do
+    valid_person = Person.create(name: 'Some guy',
+                                 email: 'email@email.com',
+                                 email_confirmation: 'typo@email.com',
+                                 wishlist: 'Nintendo')
+
+    refute valid_person.valid?
+  end
+
+  test 'a new Person record is valid if it has a well-formatted email' do
+    valid_person = Person.create(name: 'Some guy',
+                                 email: 'email@email.com',
+                                 email_confirmation: 'email@email.com',
+                                 wishlist: 'Nintendo')
+
+    assert valid_person.valid?
+  end
+
+  test 'a new Person record is invalid if it does not have a well-formatted email' do
+    valid_person = Person.create(name: 'Some guy',
+                                 email: 'some nonstandard email',
+                                 email_confirmation: 'typo@email.com',
+                                 wishlist: 'Nintendo')
+
+    refute valid_person.valid?
+  end
 end

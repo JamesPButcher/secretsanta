@@ -4,6 +4,11 @@ class Person < ActiveRecord::Base
   belongs_to :avoiding_giving_to, :class_name => 'Person', :foreign_key => 'avoiding_giving_to_id'
 
   validates :name, :email, :wishlist, presence: true
+  validates :email_confirmation, presence: true, on: :create
+  validate :email_matches_confirmation, on: :create
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+
+  attr_accessor :email_confirmation
 
   def to_s
     Digest::MD5.hexdigest(name).truncate(16)
@@ -44,5 +49,13 @@ class Person < ActiveRecord::Base
 
   def self.all_giving_and_receiving?
     Person.where('giving_to_id IS NULL OR receiving_from_id IS NULL').count == 0
+  end
+
+  private
+
+  def email_matches_confirmation
+    if self.email != self.email_confirmation
+      self.errors.add(:email_confirmation, 'does not match email.')
+    end
   end
 end

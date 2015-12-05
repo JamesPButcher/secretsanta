@@ -8,15 +8,18 @@
   <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
 <% end %>
 
-<h4>Reminder: $25 dollar spending limit!</h4>
+<div style="text-align: center;">
+  <h4>Reminder: $25 dollar spending limit!</h4>
+</div>
 
+<h4>People signed up:</h4>
 <table class='table table-striped table-bordered'>
   <thead>
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th>Giving to (scrambled)</th>
       <% if is_admin? %>
+      <th>Giving to (scrambled)</th>
       <th>Receiving from (scrambled)</th>
       <th>Avoiding Giving to (scrambled)</th>
       <% end %>
@@ -35,8 +38,8 @@
       <tr>
         <td><%= person.name.titleize %></td>
         <td><%= person.email %></td>
-        <td><%= person.giving_to %></td>
         <% if is_admin? %>
+        <td><%= person.giving_to %></td>
         <td><%= person.receiving_from %></td>
         <td><%= person.avoiding_giving_to %></td>
         <% end %>
