@@ -2,12 +2,6 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy, :email]
   skip_before_action :restrict_unless_admin, only: [:index, :new, :create, :admin, :admin_login]
 
-  def self.user_password
-    Rails.env.test? ? 'password' : ENV['USER_PASSWORD']
-  end
-
-  http_basic_authenticate_with name: "xmas", password: user_password
-
   def admin
   end
 
@@ -55,7 +49,7 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all
+    @people = Person.order(name: :asc)
   end
 
   # GET /people/1
@@ -122,4 +116,6 @@ class PeopleController < ApplicationController
     def person_params
       params.require(:person).permit(:name, :email, :email_confirmation, :giving_to_id, :receiving_from_id, :wishlist, :avoiding_giving_to_id)
     end
+
+
 end

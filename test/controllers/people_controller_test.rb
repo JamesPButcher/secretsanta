@@ -25,6 +25,17 @@ class PeopleControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
+  test "#index responds OK if the user visits the page with a valid access token" do
+    get :index, access_token: 'access_token'
+    assert_response :ok
+  end
+
+  test "#index responds Access Denied if the user visits the page with an invalid access token" do
+    request.env['HTTP_AUTHORIZATION'] = nil
+    get :index, access_token: 'foo'
+    assert_response :unauthorized
+  end
+
   test "#edit responds OK if the user is an admin" do
     get :edit, id: person.id
     assert_response :ok
