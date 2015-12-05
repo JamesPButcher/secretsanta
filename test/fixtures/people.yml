@@ -1,27 +1,24 @@
-# == Schema Information
-#
-# Table name: people
-#
-#  id                :integer          not null, primary key
-#  name              :string(255)
-#  email             :string(255)
-#  giving_to_id      :integer
-#  receiving_from_id :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  wishlist          :string(255)
-#
+chris:
+  name: Chris
+  email: chris@email.com
+  wishlist: Nintendo
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+tim:
+  name: Tim
+  email: tim@email.com
+  wishlist: Nintendo
 
-one:
-  name: MyString
-  email: MyString
-  giving_to_id: 1
-  receiving_from_id: 1
+rob:
+  name: Rob
+  email: rob@email.com
+  wishlist: Nintendo
 
-two:
-  name: MyString
-  email: MyString
-  giving_to_id: 1
-  receiving_from_id: 1
+james:
+  name: James
+  email: james@email.com
+  wishlist: Nintendo
+
+joanna:
+  name: Joanna
+  email: joanna@email.com
+  wishlist: Nintendo

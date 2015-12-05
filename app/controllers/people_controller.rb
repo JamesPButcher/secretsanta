@@ -1,11 +1,24 @@
 class PeopleController < ApplicationController
-  http_basic_authenticate_with name: "xmas", password: ENV['USER_PASSWORD']
+  before_action :set_person, only: [:show, :edit, :update, :destroy, :email]
+  skip_before_action :restrict_unless_admin, only: [:index, :new, :create, :admin, :admin_login]
 
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
-  before_action :restrict_unless_admin, except: [:index, :new, :create, :admin, :admin_login]
+  def self.user_password
+    Rails.env.test? ? 'password' : ENV['USER_PASSWORD']
+  end
 
-  # GET /admin
+  http_basic_authenticate_with name: "xmas", password: user_password
+
   def admin
+  end
+
+  def admin_login
+    if params[:password] == (Rails.env.test? ? 'admin_password' : ENV['ADMIN_PASSWORD'])
+      session[:admin] = true
+    else
+      session[:admin] = nil
+    end
+
+    redirect_to root_path
   end
 
   def reset
@@ -13,39 +26,25 @@ class PeopleController < ApplicationController
     redirect_to people_path
   end
 
-  # POST /admin
-  def admin_login
-    if params[:password] == ENV['ADMIN_PASSWORD']
-      session[:admin] = true
-    else
-      session[:admin] = false
-    end
-
-    redirect_to root_path
-  end
-
-  # GET /redo
-  def redo
-    Person.redo
+  def automatch
+    Person.reset_gives
+    GiftAssigner.match_and_give_all
     redirect_to people_path
   end
 
-  def email_by_name
-    person = Person.find_by_name(params[:name])
-
-    if Person.email_by_name(person)
-      redirect_to people_path, notice: "Successfully emailed #{person.name}"
+  def email
+    if EmailManager.email_person(@person)
+      redirect_to people_path, notice: "Successfully emailed #{@person.name}"
     else
-      redirect_to people_path, alert: "Failed to send email to #{person.email}"
+      redirect_to people_path, alert: "Failed to send email to #{@person.email}"
     end
   end
 
-  # GET /redo
   def email_everyone
-    if Person.email_everyone
+    if EmailManager.email_everyone
       redirect_to people_path, notice: 'Successfully emailed everyone'
     else
-      redirect_to people_path, alert: 'Failed to send emails, someone doesn\'t have a giver or receiver'
+      redirect_to people_path, alert: 'Failed to send emails, someone doesn\'t have a giver or recipient'
     end
   end
 
@@ -117,12 +116,6 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:name, :email, :giving_to_id, :receiving_from_id, :wishlist)
-    end
-
-    def restrict_unless_admin
-      unless session[:admin]
-        redirect_to root_path
-      end
+      params.require(:person).permit(:name, :email, :giving_to_id, :receiving_from_id, :wishlist, :avoiding_giving_to_id)
     end
 end

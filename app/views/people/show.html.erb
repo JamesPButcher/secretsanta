@@ -12,12 +12,17 @@
 
 <p>
   <strong>Giving to:</strong>
-  <%= @person.giving_to_id %>
+  <%= @person.giving_to || 'None' %>
+</p>
+
+<p>
+  <strong>Avoiding Giving to:</strong>
+  <%= @person.avoiding_giving_to || 'None' %>
 </p>
 
 <p>
   <strong>Receiving from:</strong>
-  <%= @person.receiving_from_id %>
+  <%= @person.receiving_from || 'None' %>
 </p>
 
 <p>

@@ -12,20 +12,32 @@
  *= require_tree .
  */
 
-@import "twitter/bootstrap";
+ @import 'bootstrap';
 
 body {
-	background-image: url('/img/snowflake_pattern.jpg')
+  background-image: url('/img/snowflake_pattern.jpg')
+}
+
+.label {
+  color: black;
+}
+
+ol {
+  list-style-type: none;
+}
+
+li {
+  font-size: 18px;
 }
 
 .container {
-	background-color: #eee;
+  background-color: #eee;
 }
 
 #error_explanation {
-	background-color: #fdd;
+  background-color: #fdd;
 }
 
 .field_with_errors {
-	color: #f33;
+  color: #f33;
 }

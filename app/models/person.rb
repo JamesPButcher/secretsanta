@@ -1,111 +1,48 @@
-# == Schema Information
-#
-# Table name: people
-#
-#  id                :integer          not null, primary key
-#  name              :string(255)
-#  email             :string(255)
-#  giving_to_id      :integer
-#  receiving_from_id :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  wishlist          :string(255)
-#
-
 class Person < ActiveRecord::Base
-	has_one :giving_to, class_name: 'Person', foreign_key: 'receiving_from_id'
-	has_one :receiving_from, class_name: 'Person', foreign_key: 'giving_to_id'
+  has_one :giving_to, class_name: 'Person', foreign_key: 'receiving_from_id'
+  has_one :receiving_from, class_name: 'Person', foreign_key: 'giving_to_id'
+  belongs_to :avoiding_giving_to, :class_name => 'Person', :foreign_key => 'avoiding_giving_to_id'
 
-	validates :name, :email, presence: true
+  validates :name, :email, :wishlist, presence: true
 
-	def to_s
-		Digest::MD5.hexdigest(name).truncate(16)
-	end
+  def to_s
+    Digest::MD5.hexdigest(name).truncate(16)
+  end
 
-	def give_to(recipient)
-		self.giving_to = recipient
-		recipient.receiving_from = self
+  def self.people_who_havent_given
+    where(giving_to_id: nil)
+  end
 
-		self.save
-		recipient.save
-	end
+  def self.people_who_have_not_received(excluded_ids:)
+    where(receiving_from_id: nil).where.not(id: excluded_ids.flatten)
+  end
 
-	def self.redo
-		Person.reset_gives
-		Person.automatch
-	end
+  def give_to(recipient)
+    return if self.id == recipient.id
 
-	def self.match_and_give
-		people_who_havent_given = Person.where(giving_to_id: nil)
-		@person_1 = people_who_havent_given.sample
+    Person.transaction do
+      self.giving_to = recipient
+      recipient.receiving_from = self
 
-		if @person_1
-			people_who_havent_received = Person.where(receiving_from_id: nil).where.not(id: @person_1.id)
-			@person_2 = people_who_havent_received.sample
-		end
+      save!
+      recipient.save!
+    end
+  end
 
-		if @person_1 && @person_2
-			@person_1.give_to(@person_2)
-		else
-			raise Exception, 'End of list or odd number'
-		end		
-	end
+  def avoid_giving_to(avoided_recipient)
+    return if self.id == avoided_recipient.id
 
-	def self.email_by_name(person)
-		if person.giving_to.nil? || person.receiving_from.nil?
-			return false
-		else
-			GiftMailer.gift_email(person).deliver
-			return true
-		end
-	end
+    Person.transaction do
+      self.avoiding_giving_to = avoided_recipient
+      save!
+    end
+  end
 
-	def self.email_everyone
-		people = Person.all
+  def self.reset_gives
+    Person.all.update_all(giving_to_id: nil, receiving_from_id: nil)
+  end
 
-		people.each do |person|
-			if person.giving_to.nil? || person.receiving_from.nil?
-				return false
-			end
-		end
-
-		people.each do |person|
-			GiftMailer.gift_email(person).deliver
-		end
-
-		return true
-	end
-
-	def self.automatch
-		keep_looping = true
-
-		while keep_looping do
-			begin
-				Person.match_and_give
-			rescue Exception => e
-				keep_looping = false
-			end
-		end
-
-		# there will be cases where both giving and receiving is blank
-		# so re call a redo to scramble again
-		if Person.where(giving_to_id: nil, receiving_from_id: nil) != []
-			Person.redo
-		end
-	end
-
-	def self.reset_gives
-		people = Person.all
-
-		people.each do |person|
-			person.giving_to_id = nil
-			person.receiving_from_id = nil
-			person.save
-		end
-	end
-
-	def self.even_or_odd
-		Person.count % 2 == 0 ? 'Even' : 'Odd'
-	end
+  def self.all_giving_and_receiving?
+    Person.where('giving_to_id IS NULL OR receiving_from_id IS NULL').count == 0
+  end
 end
-9

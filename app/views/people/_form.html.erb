@@ -1,32 +1,15 @@
-<%= form_for(@person) do |f| %>
-  <% if @person.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+<%= semantic_form_for(@person) do |f| %>
+  <%= f.semantic_errors %>
 
-      <ul>
-      <% @person.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.inputs :name => "Your Secret Santa details" do %>
+   <%= f.input :name %>
+   <%= f.input :email %>
+   <%= f.input :wishlist %>
+   <%= f.input :avoiding_giving_to, as: :select, collection: Person.where.not(id: @person.id).pluck(:name, :id) if is_admin? %>
+ <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
-  <br/>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email, class: 'form-control' %>
-  </div>
-  <br/>
-  <div class="field">
-    <%= f.label 'Wishlist (optional)' %><br>
-    <%= f.text_field :wishlist, class: 'form-control' %>
-  </div>  
-  <div class="actions">
-    <br/>
-    <%= f.submit 'Sign up', class: 'btn btn-success btn-lg' %>
-  </div>
+ <%= f.actions do %>
+   <%= f.action :submit, :as => :button, label: 'Save' %>
+   <%= f.action :cancel, :as => :link, label: 'Cancel' %>
+ <% end %>
 <% end %>
