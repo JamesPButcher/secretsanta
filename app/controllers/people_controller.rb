@@ -28,8 +28,12 @@ class PeopleController < ApplicationController
 
   def automatch
     Person.reset_gives
-    GiftAssigner.match_and_give_all
-    redirect_to people_path
+
+    if GiftAssigner.match_and_give_all
+      redirect_to people_path, notice: "Successfully matched everyone"
+    else
+      redirect_to people_path, alert: "Could not match everyone"
+    end
   end
 
   def email

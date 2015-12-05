@@ -96,4 +96,9 @@ class GiftAssignerTest < ActiveSupport::TestCase
       GiftAssigner.match_and_give_all
     end
   end
+
+  test ".match_and_give_all does nothing if less than 2 people exist" do
+    Person.where.not(id: people(:tim)).destroy_all
+    refute GiftAssigner.match_and_give_all
+  end
 end

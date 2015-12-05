@@ -16,6 +16,8 @@ class GiftAssigner
   end
 
   def self.match_and_give_all
+    return if Person.count < 2
+
     RESET_RETRY_COUNT.times do |i|
       MATCH_RETRY_COUNT.times do
         break unless GiftAssigner.match_and_give

@@ -30,7 +30,7 @@
          /^^^^^^^^^^^^^^^^^^`/88\\^^^^^^^^^^^^^^^^^^\
         /                    |88| \===============,  \
        /_  __  __  __   _ __ |88|_|^  to:         | __\
-       |;:.                  |88| |  <%= @person.giving_to.name.upcase %> <3  
+       |;:.                  |88| |  <%= @person.giving_to.name.upcase %> <3
        |;;:.                 |88| '==============='   |
        |;;:.                 |88|                     |
        |::.                  |88|                     |
@@ -42,13 +42,13 @@
       <p>Remember, there's a $30 spending limit!</p>
     </p>
     <% unless @person.giving_to.wishlist.blank? %>
-    	<p>
-    		Their wishlist is: <span style="color: green;"><b><%= @person.giving_to.wishlist %></b></span>
-    	</p>
+      <p>
+        Their wishlist is: <span style="color: green;"><b><%= @person.giving_to.wishlist %></b></span>
+      </p>
     <% else %>
-    	<p>
-    		The person did not supply a wishlist.
-    	</p>
+      <p>
+        The person did not supply a wishlist.
+      </p>
     <% end %>
 
     <pre style="color: orange;">
@@ -85,7 +85,7 @@
    $ !!!!!!!!!!::.""??$$$$$$eJ~^=.            ````
    ?$.`!!!!!!!!!!!!!!:."??$$$$$c'.
     "?b.`!!!!!!!!!!!!!!!!>."?$$$$c               MERRY CHRISTMAS
-      ^?$c`'!!!!!!!!!!!',eeb, "$$$k               Chris & James 
+      ^?$c`'!!!!!!!!!!!',eeb, "$$$k                  Chris 
          "?$e.`'!!!!!!! $$$$$ ;.?$$
             "?$ee,``''!."?$P`i!! 3P      http://butcher-xmas.herokuapp.com
                 ""??$bec,,.,ceeeP"
