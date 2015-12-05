@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.1.7'
+ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', group: [:development, :test]
+gem 'sqlite3', '1.3.11', group: [:development, :test]
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -32,9 +32,6 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'pg', group: :production
-
-# Use bootstrap
-gem 'bootstrap-sass'
 
 # gem 'anjlab-bootstrap-rails', '~> 3.0.2.0', :require => 'bootstrap-rails'
 
@@ -75,5 +72,3 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
-ruby "2.1.0"
