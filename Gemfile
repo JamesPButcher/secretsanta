@@ -9,7 +9,7 @@ gem 'rails'
 gem 'sqlite3', '1.3.11', group: [:development, :test]
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+# gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -23,9 +23,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 
-group :assets do
-  gem 'bootstrap-sass'
-end
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'sass-rails', '>= 3.2'
 
 # For Heroku
 # Heroku integration has previously relied on using the Rails plugin system, which has been removed from Rails 4. To enable features such as static asset serving and logging on Herok
