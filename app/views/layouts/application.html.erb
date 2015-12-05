@@ -5,21 +5,29 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <link href='https://fonts.googleapis.com/css?family=Mountains+of+Christmas' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-<div class="container" style="padding-bottom: 100px;">
-	<div class="row">
-		<div class="col-lg-12">
-			<%= yield %>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-offset-10 col-lg-2">
-			<%= link_to 'Admin login', admin_path, class: 'btn btn-default btn-sm' %>
-			<%= '(Signed in)' if is_admin? %>
-		</div>
-	</div>
+<div class="container" style="padding-bottom: 60px;">
+  <div class="row">
+    <div class="col-lg-12">
+      <%= yield %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-offset-10 col-lg-2">
+      <%= link_to 'Admin login', admin_path, class: 'btn btn-default btn-sm' %>
+      <%= '(Signed in)' if is_admin? %>
+    </div>
+  </div>
+
+  <hr>
+  <div style="text-align: center">
+    <%= image_tag asset_path('santa.gif') %>
+    <%= image_tag asset_path('wiig.gif') %>
+    <%= image_tag asset_path('rudolf.gif') %>
+  </div>
 </div>
 
 </body>
