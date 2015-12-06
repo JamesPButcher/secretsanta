@@ -21,7 +21,7 @@
       <% if is_admin? %>
       <th>Giving to (scrambled)</th>
       <th>Receiving from (scrambled)</th>
-      <th>Avoiding Giving to (scrambled)</th>
+      <th>Avoid Giving to</th>
       <% end %>
       <th>Wishlist</th>
       <% if is_admin? %>
@@ -41,7 +41,15 @@
         <% if is_admin? %>
         <td><%= person.giving_to %></td>
         <td><%= person.receiving_from %></td>
-        <td><%= person.avoiding_giving_to %></td>
+        <td>
+          <%= semantic_form_for(person) do |f| %>
+            <%= f.input :avoiding_giving_to,
+                        label: false,
+                        as: :select,
+                        collection: Person.where.not(id: person.id).pluck(:name, :id),
+                        input_html: {onchange: 'this.form.submit()' } %>
+          <% end %>
+        </td>
         <% end %>
         <td><%= person.wishlist.blank? ? 'Not provided' : 'Provided' %></td>
         <% if is_admin? %>
