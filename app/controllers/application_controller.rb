@@ -20,14 +20,13 @@ class ApplicationController < ActionController::Base
   private
 
   def need_http_auth?
-    return false if request.env['HTTP_AUTHORIZATION']
     return false if session[:using_valid_token]
-
-    !access_token_used_and_valid?
+    set_using_valid_token
+    return false if session[:using_valid_token]
+    true
   end
 
-  def access_token_used_and_valid?
-    return true if session[:using_valid_token]
+  def set_using_valid_token
     result = (params[:access_token] == (Rails.env.test? ? 'access_token' : ENV['USER_TOKEN']))
     session[:using_valid_token] = result
   end
